@@ -1,0 +1,44 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amsthm}
+\usepackage{parskip}
+\title{Binomial Options Pricing Model}
+\date{October 2018}
+
+\begin{document}
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+
+\section{One-Step Binomial Model \& No-Arbitrage Argument}
+\paragraph{Outline} \hspace{0pt}
+
+Consider a stock currently priced at $S_{0}=\text{\$100}$, and at the end of three months ($t_{T}$), the stock price will be either $S_{T}=\text{\$110}$ or $S_{T}=\text{\$90}$. Assume the scenario where we are valuing a European call option to purchase the stock for \$105 at $t_{T}$. There are two possible outcomes at $t_{T}$: if $S_{T}=\text{\$110}$, the value of the call option will be \$5; if $S_{T}=\text{\$90}$, the value of the call option will be 0.
+
+We assume that arbitrage opportunities do not exist. The scenario is also set up in such a way that there is no uncertainty about the value of the stock at the end of three months. In the absence of arbitrage opportunities and uncertainties, the return it earns must then equal the risk-free rate of interest ($R_{f}$). It is always possible to set up a riskless portfolio because there are two securities (stock and call option) and only two possible outcomes.
+
+Consider a portfolio consisting of a long position in $\delta$ shares of the stock and a short position in one call option. Then, calculate the value of $\delta$ that makes the portfolio riskless. If the $S$ moves up from $S_{0}=100$ to $S_{T}=110$, the value of the shares is $110\delta$ and the value of the option is 1; the portfolio value is $110\delta-1$. If the $S$ moves down from $S_{0}=100$ to $S_{T}=90$, the value of the shares is $90\delta$ and the value of the option is 0; the portfolio value is $90\delta$. To set up a riskless portfolio, the portfolio value at $t_{T}$ must be the same for either outcome.
+\begin{align*}
+110\delta-1&=90\delta\\
+\delta&=0.05
+\end{align*}
+The portfolio is riskless if it consists of a long position in 0.05 shares and a short position in one call option. In either outcome, the value of the portfolio is always 4.5 at $t_{T}$. $\delta$ is the number of shares necessary to hedge a short position in one call option.
+
+In the absence of arbitrage opportunities, a riskles portfolio must earn the risk-free rate of interest, $R_{f}$. Assuming that $R_{f}=0.05$ per annum, the value of the portfolio today must be:
+\begin{align*}
+4.5e^{-0.05\cdot3/12}&=4.4441
+\end{align*}
+The stock price today at $t_{0}$ is known to be \$100. Let $f=\text{option price today}$. The value of the portfolio today must be:
+\begin{align*}
+100\cdot0.05-f&=4.4441\\
+5-f&=4.4441\\
+f&=0.5559
+\end{align*}
+In the absence of arbitrage opportunities, the value of the option at $t_{0}$ must be $f=0.5559$. If $f>0.5559$, the portfolio would cost less than 4.4441 to set up and would earn more than $R_{f}$. Conversely, if $f<0.5559$, shorting the stock and buying the option would allow for borrowing at less than $R_{f}$.
+
+\paragraph{Generalization} \hspace{0pt}
+
+
+
+\end{document}
