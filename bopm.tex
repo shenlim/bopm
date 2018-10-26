@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsfonts,amsthm}
 \usepackage{parskip}
+\addtolength{\jot}{1em}
 \title{Binomial Options Pricing Model}
 \date{October 2018}
 
@@ -11,19 +12,19 @@
 \maketitle
 \end{titlepage}
 
-\section{One-Step Binomial Model \& No-Arbitrage Argument}
-\paragraph{Outline} \hspace{0pt}
+\section{One-Step Binomial Model}
+\paragraph{No-Arbitrage Assumption} \hspace{0pt}
 
 Consider a stock currently priced at $S_{0}=\text{\$100}$, and at the end of three months ($t_{T}$), the stock price will be either $S_{T}=\text{\$110}$ or $S_{T}=\text{\$90}$. Assume the scenario where we are valuing a European call option to purchase the stock for \$105 at $t_{T}$. There are two possible outcomes at $t_{T}$: if $S_{T}=\text{\$110}$, the value of the call option will be \$5; if $S_{T}=\text{\$90}$, the value of the call option will be 0.
 
-We assume that arbitrage opportunities do not exist. The scenario is also set up in such a way that there is no uncertainty about the value of the stock at the end of three months. In the absence of arbitrage opportunities and uncertainties, the return it earns must then equal the risk-free rate of interest ($R_{f}$). It is always possible to set up a riskless portfolio because there are two securities (stock and call option) and only two possible outcomes.
+Assume that arbitrage opportunities do not exist. The scenario is also set up in such a way that there is no uncertainty about the value of the stock at the end of three months. In the absence of arbitrage opportunities and uncertainties, the return it earns must then equal the risk-free rate of interest ($R_{f}$). It is always possible to set up a riskless portfolio because there are two securities (stock and call option) and only two possible outcomes.
 
-Consider a portfolio consisting of a long position in $\delta$ shares of the stock and a short position in one call option. Then, calculate the value of $\delta$ that makes the portfolio riskless. If the $S$ moves up from $S_{0}=100$ to $S_{T}=110$, the value of the shares is $110\delta$ and the value of the option is 1; the portfolio value is $110\delta-1$. If the $S$ moves down from $S_{0}=100$ to $S_{T}=90$, the value of the shares is $90\delta$ and the value of the option is 0; the portfolio value is $90\delta$. To set up a riskless portfolio, the portfolio value at $t_{T}$ must be the same for either outcome.
+Consider a portfolio consisting of a long position in $\varepsilon$ shares of the stock and a short position in one call option. Then, calculate the value of $\varepsilon$ that makes the portfolio riskless. If the $S$ moves up from $S_{0}=100$ to $S_{T}=110$, the value of the shares is $110\varepsilon$ and the value of the option is 1; the portfolio value is $110\varepsilon-1$. If the $S$ moves down from $S_{0}=100$ to $S_{T}=90$, the value of the shares is $90\varepsilon$ and the value of the option is 0; the portfolio value is $90\varepsilon$. To set up a riskless portfolio, the portfolio value at $t_{T}$ must be the same for either outcome.
 \begin{align*}
-110\delta-1&=90\delta\\
-\delta&=0.05
+110\varepsilon-1&=90\varepsilon\\
+\varepsilon&=0.05
 \end{align*}
-The portfolio is riskless if it consists of a long position in 0.05 shares and a short position in one call option. In either outcome, the value of the portfolio is always 4.5 at $t_{T}$. $\delta$ is the number of shares necessary to hedge a short position in one call option.
+The portfolio is riskless if it consists of a long position in 0.05 shares and a short position in one call option. In either outcome, the value of the portfolio is always 4.5 at $t_{T}$. $\varepsilon$ is the number of shares necessary to hedge a short position in one call option.
 
 In the absence of arbitrage opportunities, a riskles portfolio must earn the risk-free rate of interest, $R_{f}$. Assuming that $R_{f}=0.05$ per annum, the value of the portfolio today must be:
 \begin{align*}
@@ -39,6 +40,72 @@ In the absence of arbitrage opportunities, the value of the option at $t_{0}$ mu
 
 \paragraph{Generalization} \hspace{0pt}
 
+Let the current stock price $=S_{0}$ and the stock option price $=f$. Suppose that during the life of the option (from $t_{0}$ to $t_{T}$), the stock price can either move up from $S_{0}$ to $S_{0}u$ or move down from $S_{0}$ to $S_{0}d$; where $(u>1; d<1)$. The proportional increase in stock price in an up movement is $u-1$; the proportional decrease in stock price in a down movement is $1-d$. Suppose that for $S_{0}u$, the option payoff is $f_{u}$ and for $S_{0}d$, the option payoff is $f_{d}$.
 
+Consider a portfolio consisting of a long position in $\varepsilon$ shares and a short position in one stock option. In an up movement in the stock price, the portfolio value at $t_{T}$ is:
+\begin{align*}
+S_{0}u\varepsilon-f_{u}
+\end{align*}
+In a down movement in the stock price, the portfolio value at $t_{T}$ is:
+\begin{align*}
+S_{0}d\varepsilon-f_{d}
+\end{align*}
+For a riskless portfolio, the two must equal:
+\begin{align*}
+S_{0}u\varepsilon-f_{u}&=S_{0}d\varepsilon-f_{d}\\
+\varepsilon&=\frac{f_{u}-f_{d}}{S_{0}u-S_{0}d}
+\end{align*}
+$\varepsilon$ is the ratio of the change in option price to the change in stock price as $t_{0}$ approaches $t_{T}$. Let the risk-free rate of interest $=r$. The present value of the portfolio is:
+\begin{align*}
+(S_{0}u\varepsilon-f_{u})e^{-rT}
+\end{align*}
+The portfolio set up cost (at $t_{0}$) is:
+\begin{align*}
+S_{0}\varepsilon-f
+\end{align*}
+Then,
+\begin{align*}
+S_{0}\varepsilon-f&=(S_{0}u\varepsilon-f_{u})e^{-rT}\\
+f&=S_{0}\varepsilon(1-ue^{-rT})+f_{u}e^{-rT}
+\end{align*}
+Recall that
+\begin{align*}
+\varepsilon&=\frac{f_{u}-f_{d}}{S_{0}u-S_{0}d}
+\end{align*}
+Substituting $\varepsilon$,
+\begin{align*}
+f&=S_{0}\left(\frac{f_{u}-f_{d}}{S_{0}u-S_{0}d}\right)(1-ue^{-rT})+f_{u}e^{-rT}\\
+&=S_{0}\left(\frac{f_{u}-f_{u}ue^{-rT}-f_{d}+f_{d}ue^{-rT}}{S_{0}u-S_{0}d}\right)+f_{u}e^{-rT}\\
+&=\frac{S_{0}f_{u}-S_{0}f_{u}ue^{-rT}-S_{0}f_{d}+S_{0}f_{d}ue^{-rT}+S_{0}f_{u}ue^{-rT}-S_{0}f_{u}de^{-rT}}{S_{0}u-S_{0}d}\\
+&=\frac{S_{0}f_{u}-S_{0}f_{d}+S_{0}f_{d}ue^{-rT}-S_{0}f_{u}de^{-rT}}{S_{0}u-S_{0}d}\\
+&=\frac{f_{u}(1-de^{-rT})+f_{d}(ue^{-rT}-1)}{u-d}
+\end{align*}
+Let
+\begin{align*}
+fe^{rT}&=\frac{f_{u}(e^{rT}-e^{rT}de^{-rT})+f_{d}(e^{rT}ue^{-rT}-e^{rT})}{u-d}\\
+&=\frac{f_{u}(e^{rT}-d)+f_{d}(u-e^{rT})}{u-d}\\
+&=f_{u}\left(\frac{e^{rT}-d}{u-d}\right)+f_{d}\left(\frac{u-e^{rT}}{u-d}\right)
+\end{align*}
+Where
+\begin{align*}
+p=\frac{e^{rT}-d}{u-d} \text{ ; }
+1-p=\frac{u-e^{rT}}{u-d}
+\end{align*}
+Then
+\begin{align*}
+f=[f_{u}(p)+f_{d}(1-p)]e^{-rT}\\
+\end{align*}
+Consider the same scenario, where $r=0.05$, $T=0.25$, $f_{u}=1$, and $f_{d}=0$.\\
+\begin{align*}
+u&=1+\frac{(110-100)}{100}=1.10 \text{ ; }
+d=1+\frac{(90-100)}{100}=0.90\\
+p&=\frac{e^{0.05\cdot0.25}-0.9}{1.1-0.9}=0.5629 \text{ ; }
+f=e^{-0.05\cdot0.25}(0.5629\cdot1+0.4371\cdot0)=0.5559
+\end{align*}
+
+\newpage
+\begin{thebibliography}{1}
+\bibitem{} Hull, John C. {\em Fundamentals of Futures and Options Markets.} 2017.
+\end{thebibliography}
 
 \end{document}
