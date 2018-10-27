@@ -41,9 +41,3 @@ binomial_option <- function(S, K, r, T, N, sigma, type) {
   delta = (option[2,2]-option[2,1])/(tree[2,2]-tree[2,1])
   return(list(p=p, delta=delta, stock=tree, option=option, price=option[1,1]))
 }
-
-delta <- function(binomial_option, row, col) {
-  stock_tree = binomial_option$stock
-  option_tree = binomial_option$option
-  return((option_tree[row+1, col+1] - option_tree[row+1, col])/(stock_tree[row+1, col+1] - stock_tree[row+1, col]))
-}
