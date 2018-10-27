@@ -8,10 +8,10 @@ tree_stock <- function(S, sigma, delta_t, N) {
   tree = matrix(NA, nrow=N+1, ncol=N+1)
   u = exp(sigma*sqrt(delta_t))
   d = (1/u)
-
+  
   for (i in 1:(N+1)) {
     for (j in 1:i) {
-    tree[i,j] = S*u^(j-1)*d^(i-j)
+      tree[i,j] = S*u^(j-1)*d^(i-j)
     }
   }
   return(tree)
@@ -28,7 +28,7 @@ value_binomial_option <- function(tree, sigma, delta_t, r, K, type) {
   }
   for (i in (nrow(tree)-1):1) {
     for(j in 1:i) {
-    option_tree[i,j] = (p*option_tree[i+1,j+1] + (1-p)*option_tree[i+1,j])/exp(r*delta_t)
+      option_tree[i,j] = (p*option_tree[i+1,j+1] + (1-p)*option_tree[i+1,j])/exp(r*delta_t)
     }
   }
   return(option_tree)
