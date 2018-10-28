@@ -66,12 +66,13 @@ resulting in `option_tree[i,j] = (p*option_tree[i+1,j+1] + (1-p)*option_tree[i+1
 
 Putting it together:
 ```r
-binomial_option <- function(S, K, r, T, N, sigma, type) {
+binomial_option <- function(S, K, r, T, N, sigma, type, american) {
   p = p_prob(r=r, delta_t=T/N, sigma=sigma)
   tree = tree_stock(S=S, sigma=sigma, delta_t=T/N, N=N)
-  option = value_binomial_option(tree, sigma=sigma, delta_t=T/N, r=r, K=K, type=type)
+  ex = exercise(S=S, sigma=sigma, delta_t=T/N, N=N, K=K, type=type)
+  option = value_binomial_option(tree, sigma=sigma, delta_t=T/N, r=r, K=K, type=type, ex, american)
   delta = (option[2,2]-option[2,1])/(tree[2,2]-tree[2,1])
-  return(list(p=p, delta=delta, stock=tree, option=option, price=option[1,1]))
+  return(list(p=p, delta=delta, stock=tree, exercise=ex, option=option, price=option[1,1]))
 }
 ```
 Recall that
@@ -83,7 +84,7 @@ resulting in `delta = (option[2,2]-option[2,1])/(tree[2,2]-tree[2,1])`.
 ## Generating the Output
 The option function is given by:
 ```r
-binomial_option <- function(S, K, r, T, N, sigma, type)
+binomial_option <- function(S, K, r, T, N, sigma, type, american)
 ```
 Inputs:
 
