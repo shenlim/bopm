@@ -94,6 +94,7 @@ Inputs:
 * `N`: Number of steps.
 * `sigma`: Underlying asset price volatility.
 * `type`: `call` for call option, `put` for put option.
+* `american`: `0` or `FALSE` for European option, `1` or `TRUE` for American option.
 
 ## Built With
 * [R](https://www.r-project.org/) - Software environment for statistical computing.
