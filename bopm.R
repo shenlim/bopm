@@ -1,7 +1,7 @@
-p_prob <- function(r, delta_t, sigma) {
+p_prob <- function(r, delta_t, sigma, div) {
   u = exp(sigma*sqrt(delta_t))
   d = (1/u)
-  return((exp(r*delta_t)-d)/(u-d))
+  return((exp((r-div)*delta_t)-d)/(u-d))
 }
 
 tree_stock <- function(S, N, delta_t, sigma) {
@@ -30,7 +30,6 @@ exercise <- function(S, K, N, delta_t, sigma, type) {
     }
     return(ex)
   }
-
   else {
     for (i in 1:(N+1)) {
       for (j in 1:i) {
@@ -41,8 +40,8 @@ exercise <- function(S, K, N, delta_t, sigma, type) {
   }
 }
 
-value_binomial_option <- function(K, r, delta_t, sigma, type, american, tree, ex) {
-  p = p_prob(r, delta_t, sigma)
+value_binomial_option <- function(K, r, delta_t, sigma, type, american, tree, ex, div) {
+  p = p_prob(r, delta_t, sigma, div)
   option_tree = matrix(NA, nrow=nrow(tree), ncol=ncol(tree))
   if(type == "call") {
     option_tree[nrow(option_tree),] = pmax(tree[nrow(tree),]-K,0)
@@ -70,11 +69,11 @@ value_binomial_option <- function(K, r, delta_t, sigma, type, american, tree, ex
   }
 }
 
-binomial_option <- function(S, K, r, T, N, sigma, type, american) {
-  p = p_prob(r= r, delta_t= T/N, sigma= sigma)
+binomial_option <- function(S, K, r, T, N, sigma, type, american, div) {
+  p = p_prob(r= r, delta_t= T/N, sigma= sigma, div= div)
   tree = tree_stock(S= S, N= N, delta_t= T/N, sigma= sigma)
   ex = exercise(S= S, K= K, N= N, delta_t= T/N, sigma= sigma, type= type)
-  option = value_binomial_option(K= K, r= r, delta_t= T/N, sigma= sigma, type= type, american, tree, ex)
+  option = value_binomial_option(K= K, r= r, delta_t= T/N, sigma= sigma, type= type, american, tree, ex, div)
   delta = (option[2,2]-option[2,1])/(tree[2,2]-tree[2,1])
   return(list(p= p, delta= delta, stock= tree, exercise= ex, option= option, price= option[1,1]))
 }
