@@ -74,7 +74,7 @@ The option price can be expressed as:
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;f=[f_{u}(p)&plus;f_{d}(1-p)]e^{-rT}" target="_blank"><img src="https://latex.codecogs.com/png.latex?\dpi{120}&space;f=[f_{u}(p)&plus;f_{d}(1-p)]e^{-rT}" title="f=[f_{u}(p)+f_{d}(1-p)]e^{-rT}" /></a>
 
-resulting in `option_tree[i,j] = (p*option_tree[i+1,j+1] + (1-p)*option_tree[i+1,j])/exp(r*delta_t)`. Note that for an American option (`american = TRUE` or `american = 1`), we must compare the exercise payoff and the option value at each node and choose whichever is higher.
+resulting in `option_tree[i,j] = (p*option_tree[i+1,j+1] + (1-p)*option_tree[i+1,j])/exp(r*delta_t)`. Note that for an American option (`american = TRUE` or `american = 1`), we must compare the exercise payoff and the option value at each node and choose whichever is higher, barring negative values.
 
 Putting it together:
 ```r
@@ -102,12 +102,12 @@ Inputs:
 
 * `S`: Current underlying asset price.
 * `K`: Option strike price.
-* `r`: Risk-free rate of interest; convert percantages to decimals.
+* `r`: Risk-free rate of interest; convert percentages to decimals.
 * `T`: Time period; expressed in years.
 * `N`: Number of steps.
 * `sigma`: Underlying asset price volatility.
 * `type`: `call` for call option, `put` for put option.
-* `american`: `0` or `FALSE` for European option, `1` or `TRUE` for American option.
+* `american`: `0` or `FALSE` for European options, `1` or `TRUE` for American options.
 * `div`: Dividend yield, if any; convert percentages to decimals.
 
 ## Built With
