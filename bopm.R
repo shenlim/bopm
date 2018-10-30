@@ -1,3 +1,6 @@
+# Binomial Options Pricing Model - Oct 2018. Author: Shen Lim
+# Copyright 2018, Shen Lim, All Rights Reserved.
+
 p_prob <- function(r, delta_t, sigma, div) {
   u = exp(sigma*sqrt(delta_t))
   d = (1/u)
