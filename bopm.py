@@ -1,7 +1,9 @@
 # Binomial Options Pricing Model (BOPM) - Nov 2018. Author: Shen Lim.
 # Copyright 2018, Shen Lim, All Rights Reserved.
 import numpy as np
+import time # Optional to measure elapsed time.
 
+start_time = time.time()
 def bopm():
     S = float(input("Spot stock price? "))
     K = float(input("Strike price? "))
@@ -89,3 +91,5 @@ def bopm():
 
     else:
         return("Invalid input.")
+
+    print("\nElapsed time: %s seconds" % ((time.time() - start_time) / 1000))
