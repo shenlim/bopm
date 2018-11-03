@@ -50,13 +50,13 @@ def bopm():
         return ("Invalid input.")
 
     # Option tree
-    op = np.zeros((N + 1, N + 1), dtype = float) # Define array for the option value tree.
+    opTree = np.zeros((N + 1, N + 1), dtype = float)
     
     if (call.lower() == "c") or (call.lower() == "call"):
-        op[N,] = exC[N,] # Fix option value at final node (already  computed in the exercise tree).
+        opTree[N,] = exC[N,] # Fix option value at final node (already  computed in the exercise tree).
 
     elif (call.lower() == "p") or (call.lower() == "put"):
-        op[N,] = exP[N,]
+        opTree[N,] = exP[N,]
 
     else:
         return ("Invalid input.")
@@ -64,14 +64,14 @@ def bopm():
     if (A.lower() == "e") or (A.lower() == "european"):
         for i in range(N - 1, -1, -1): # Recursively calculate option value at each node (except final).
             for j in range(0, i + 1):
-                op[i, j] = (op[i + 1, j + 1] * p + op[i + 1, j] * (1 - p)) / np.exp(r * deltaT)
+                opTree[i, j] = (opTree[i + 1, j + 1] * p + opTree[i + 1, j] * (1 - p)) / np.exp(r * deltaT)
 
-        delta = (op[1, 1] - op[1, 0]) / (tree [1, 1] - tree[1, 0])
+        delta = (opTree[1, 1] - opTree[1, 0]) / (tree [1, 1] - tree[1, 0])
         
-        print("Option Tree:\n", op, "\n",
+        print("Option Tree:\n", opTree, "\n",
               "\nP           : ", p, "\n",
               "\nDelta       : ", delta, "\n",
-              "\nOption Price: ", op[0, 0])
+              "\nOption Price: ", opTree[0, 0])
 
     elif (A.lower() == "a") or (A.lower() == "american"):
         for i in range(N - 1, -1, -1):
@@ -79,15 +79,15 @@ def bopm():
                 if (call.lower() == "c") or (call.lower() == "call"): exPayoff = exC[i, j]
                 elif (call.lower() == "p") or (call.lower() == "put"): exPayoff = exP[i, j]
                 else: return("Invalid input.")
-                holdPayoff = (op[i + 1, j + 1] * p + op[i + 1, j] * (1 - p)) / np.exp(r * deltaT)
-                op[i, j] = np.maximum(exPayoff, holdPayoff)
+                holdPayoff = (opTree[i + 1, j + 1] * p + opTree[i + 1, j] * (1 - p)) / np.exp(r * deltaT)
+                opTree[i, j] = np.maximum(exPayoff, holdPayoff)
 
-        delta = (op[1, 1] - op[1, 0]) / (tree [1, 1] - tree[1, 0])
+        delta = (opTree[1, 1] - opTree[1, 0]) / (tree [1, 1] - tree[1, 0])
         
-        print("Option Tree:\n", op, "\n",
+        print("Option Tree:\n", opTree, "\n",
               "\nP           : ", p, "\n",
               "\nDelta       : ", delta, "\n",
-              "\nOption Price: ", op[0, 0])
+              "\nOption Price: ", opTree[0, 0])
 
     else:
         return("Invalid input.")
