@@ -1,22 +1,20 @@
 # Binomial Options Pricing Model - Oct 2018. Author: Shen Lim
 
-bopm <- function(s, k, r, t, n, sigma, type, style, div) {
+bopm <- function() {
   # Computes option price based on binomial tree (discrete-time) approach (Cox, Ross, Rubinstein 1979).
-  #
-  # Args:
-  #   s:     Current underlying asset price.---------------------[numeric]
-  #   k:     Option strike price.--------------------------------[numeric]
-  #   r:     Risk-free rate of interest expressed in decimals.---[numeric]
-  #   t:     Time period expressed in years.---------------------[numeric]
-  #   n:     Number of steps.------------------------------------[integer]
-  #   sigma: Underlying asset price volatility.------------------[numeric]
-  #   type:  "call" or "put".------------------------------------[character]
-  #   style: "e" for European options, "a" for American options.-[character]
-  #   div:   Dividend yield expressed in decimals; "0" if none.--[numeric]
-  #
   # Returns and stores:
   #   (1) Risk neutral probability, (2) Stock tree, (3) Exercise payoff tree,
   #   (4) Option tree, (5) Option delta, (6) Option price at t = 0.
+  
+  s     <- as.numeric(readline("Current asset price:                   "))
+  k     <- as.numeric(readline("Option strike price:                   "))
+  r     <- as.numeric(readline("Risk-free rate of interest (decimals): "))
+  t     <- as.numeric(readline("Time period (years):                   "))
+  n     <- as.integer(readline("Number of steps:                       "))
+  sigma <- as.numeric(readline("Asset price volatility (decimals):     "))
+  type  <- as.character(readline("Type (call or put):                    "))
+  style <- as.character(readline("Style (a (American) or e (European)):  "))
+  div   <- as.numeric(readline("Dividend yield (decimals):             "))
   
   u <- exp(sigma * sqrt(t / n))
   d <- 1 / u
